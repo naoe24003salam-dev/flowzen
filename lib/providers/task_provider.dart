@@ -68,4 +68,35 @@ class TaskProvider with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> toggleTaskComplete(String id) => toggleComplete(id);
+
+  List<Task> getTasksForDate(DateTime date) {
+    final box = _boxOrNull;
+    if (box == null) return [];
+    
+    return box.values.where((task) {
+      if (task.dueDate == null) return false;
+      return task.dueDate!.year == date.year &&
+          task.dueDate!.month == date.month &&
+          task.dueDate!.day == date.day;
+    }).toList();
+  }
+
+  Future<void> createTask({
+    required String title,
+    String description = '',
+    Priority priority = Priority.medium,
+    DateTime? dueDate,
+  }) async {
+    final task = Task(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      title: title,
+      description: description,
+      priority: priority,
+      createdAt: DateTime.now(),
+      dueDate: dueDate,
+    );
+    await addTask(task);
+  }
 }

@@ -47,7 +47,8 @@ class AnalyticsScreen extends StatelessWidget {
           );
         });
 
-        return Card(
+        return Center(
+          child: Card(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           child: Container(
             decoration: const BoxDecoration(
@@ -80,8 +81,7 @@ class AnalyticsScreen extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-        );
+          ),        ),        );
       },
     );
   }
