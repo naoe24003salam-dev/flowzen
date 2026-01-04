@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.flowzen.app"
+    namespace = "com.example.flowzen"
     compileSdk = 36
 
     compileOptions {
@@ -20,7 +20,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.flowzen.app"
+        applicationId = "com.example.flowzen"
         minSdk = 26
         targetSdk = 35
         versionCode = 1

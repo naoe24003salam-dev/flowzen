@@ -63,6 +63,15 @@ void main() async {
     // Launch app
     if (hiveInitialized) {
       runApp(const FlowZenApp());
+      // Initialize providers after first frame when Hive is confirmed ready
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        // Wait a bit more to ensure everything is settled
+        await Future.delayed(const Duration(milliseconds: 100));
+        final context = WidgetsBinding.instance.rootElement;
+        if (context != null) {
+          FlowZenApp.initializeProviders(context);
+        }
+      });
     } else {
       // Show error screen if Hive failed
       runApp(

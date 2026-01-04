@@ -26,14 +26,8 @@ class FlowZenApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => NoteProvider()),
         ChangeNotifierProvider(create: (_) => StatisticsProvider()),
       ],
-      child: Builder(
-        builder: (context) {
-          // Load theme after providers are created
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            Provider.of<ThemeProvider>(context, listen: false).loadSavedTheme();
-          });
-          
-          final themeProvider = Provider.of<ThemeProvider>(context);
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProvider, _) {
           return MaterialApp(
             title: 'FlowZen',
             debugShowCheckedModeBanner: false,
@@ -74,5 +68,14 @@ class FlowZenApp extends StatelessWidget {
         },
       ),
     );
+  }
+  
+  // Method to initialize providers after Hive is ready
+  static void initializeProviders(BuildContext context) {
+    try {
+      Provider.of<ThemeProvider>(context, listen: false).loadSavedTheme();
+    } catch (e) {
+      debugPrint('Error loading theme: $e');
+    }
   }
 }
